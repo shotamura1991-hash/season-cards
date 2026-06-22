@@ -40,7 +40,8 @@ let state = {
   locked: false,     // 演出中の クリックぼうし
 };
 
-let soundOn = localStorage.getItem("kisetsu-sound") !== "off";
+let soundOn = true;
+try { soundOn = localStorage.getItem("kisetsu-sound") !== "off"; } catch (e) { /* file:// などで使えない場合 */ }
 updateSoundBtn();
 
 // =================== 画面きりかえ ===================
@@ -247,7 +248,7 @@ function playFanfare() {
 
 function toggleSound() {
   soundOn = !soundOn;
-  localStorage.setItem("kisetsu-sound", soundOn ? "on" : "off");
+  try { localStorage.setItem("kisetsu-sound", soundOn ? "on" : "off"); } catch (e) {}
   updateSoundBtn();
   if (soundOn) playCorrect();
 }
