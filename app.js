@@ -37,6 +37,7 @@ let state = {
   cleanThisCard: true, // このカードを ノーミスで こたえたか
   perfect: 0,        // ノーミス枚数
   filter: "all",
+  count: 20,         // 出題する まい数（"all"=ぜんぶ）
   locked: false,     // 演出中の クリックぼうし
 };
 
@@ -59,6 +60,14 @@ document.querySelectorAll(".filter-btn").forEach((btn) => {
   });
 });
 
+document.querySelectorAll(".count-btn").forEach((btn) => {
+  btn.addEventListener("click", () => {
+    document.querySelectorAll(".count-btn").forEach((b) => b.classList.remove("is-active"));
+    btn.classList.add("is-active");
+    state.count = btn.dataset.count === "all" ? "all" : Number(btn.dataset.count);
+  });
+});
+
 document.getElementById("start-btn").addEventListener("click", startGame);
 document.getElementById("home-btn").addEventListener("click", () => show("start"));
 document.getElementById("again-btn").addEventListener("click", startGame);
@@ -71,7 +80,9 @@ function startGame() {
   if (state.filter !== "all") {
     pool = CARDS.filter((c) => c.season === state.filter);
   }
-  state.deck = shuffle(pool.slice());
+  const shuffled = shuffle(pool.slice());
+  const n = state.count === "all" ? shuffled.length : Math.min(state.count, shuffled.length);
+  state.deck = shuffled.slice(0, n);
   state.pos = 0;
   state.perfect = 0;
   show("quiz");

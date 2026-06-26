@@ -96,7 +96,8 @@ button {
   gap: 10px;
   justify-content: center;
 }
-.filter-btn {
+.filter-btn,
+.count-btn {
   border: 3px solid #f0d9c4;
   background: #fff;
   color: var(--ink);
@@ -105,7 +106,8 @@ button {
   border-radius: 999px;
   transition: transform .08s, background .15s, border-color .15s;
 }
-.filter-btn.is-active {
+.filter-btn.is-active,
+.count-btn.is-active {
   background: var(--accent);
   border-color: var(--accent);
   color: #fff;
